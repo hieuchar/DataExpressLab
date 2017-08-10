@@ -4,4 +4,11 @@ var express = require('express'),
 		pug = require('pug'),
 		bodyParser = require('body-parser'),
 		bcrypt = require('bcrypt-nodejs'),
-        mongoose = require('mongoose');
+		mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/data');
+
+var app = express();
+
+app.listen(3000);
