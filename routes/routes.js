@@ -19,8 +19,8 @@ exports.route = function (req, res) { // Route template
 };
 
 exports.index = function (req, res) {
-  Person.find(function (err, person) {
-    if (err) return console.error(err);
-    res.render('index');
-  });
+	res.render('index');
 };
+exports.signup = function(req, res) {
+	res.render('sign-up');
+}

@@ -3,7 +3,8 @@ var express = require('express'),
 		path = require('path'),
 		pug = require('pug'),
 		bodyParser = require('body-parser'),
-		bcrypt = require('bcrypt-nodejs');
+		bcrypt = require('bcrypt-nodejs'),
+		route = require('./routes/routes.js');
 
 var app = express();
 app.set('view engine', 'pug');
@@ -11,5 +12,6 @@ app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
 
 app.get('/', route.index); // Single Interceptors go in here
+app.get('/signup', route.signup);
 
 app.listen(3000);
