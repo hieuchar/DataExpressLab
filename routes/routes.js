@@ -17,3 +17,10 @@ var Person = mongoose.model('People_Collection', personSchema);
 exports.route = function (req, res) { // Route template
   
 };
+
+exports.index = function (req, res) {
+  Person.find(function (err, person) {
+    if (err) return console.error(err);
+    res.render('index');
+  });
+};

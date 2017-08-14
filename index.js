@@ -5,19 +5,11 @@ var express = require('express'),
 		bodyParser = require('body-parser'),
 		bcrypt = require('bcrypt-nodejs');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/data');
-
 var app = express();
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
 
-
-
-app.get('/', function(req, res){
-  res.render("index");
-});
-
+app.get('/', route.index); // Single Interceptors go in here
 
 app.listen(3000);
