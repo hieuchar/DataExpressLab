@@ -3,22 +3,16 @@ var express = require('express'),
 		path = require('path'),
 		pug = require('pug'),
 		bodyParser = require('body-parser'),
-        mongoose = require('mongoose'),
-		bcrypt = require('bcrypt-nodejs');
-
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/data');
+		
+		bcrypt = require('bcrypt-nodejs'),
+		route = require('./routes/routes.js');
 
 var app = express();
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
 
-
-
-app.get('/', function(req, res){
-  res.render("index");
-});
-
+app.get('/', route.index); // Single Interceptors go in here
+app.get('/signup', route.signup);
 
 app.listen(3000);

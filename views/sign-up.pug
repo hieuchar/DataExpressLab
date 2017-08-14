@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	form(id='form' method='post' action='/')
+		label Username	
+		input(type='text' name='username')
+		br
+		label Password	
+		input(type='password' name='password')
+		br
+		label Age
+		input(type='number' name='age')
+		br
+		fieldset(id='question1')
+			label Would you rather:
+			input(type='radio' name='question1' value='0' fieldset='question1') 
+			label Be illiterate
+			input(type='radio' name='question1' value='1' fieldset='question1') 
+			label Take everything literally
+		br
+		input(type='submit' value='Submit')
+		
+	

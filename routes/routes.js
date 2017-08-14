@@ -17,3 +17,10 @@ var Person = mongoose.model('People_Collection', personSchema);
 exports.route = function (req, res) { // Route template
   
 };
+
+exports.index = function (req, res) {
+	res.render('index');
+};
+exports.signup = function(req, res) {
+	res.render('sign-up');
+}
