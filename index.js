@@ -3,6 +3,7 @@ var express = require('express'),
 		path = require('path'),
 		pug = require('pug'),
 		bodyParser = require('body-parser'),
+        mongoose = require('mongoose'),
 		bcrypt = require('bcrypt-nodejs');
 
 mongoose.Promise = global.Promise;
