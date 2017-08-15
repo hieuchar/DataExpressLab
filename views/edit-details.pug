@@ -8,21 +8,38 @@ block content
 		fieldset(id='question1')
 			label Would you rather: 
 			if(user.firstAnswer)
-				input(type='radio' name='question1' value='1' fieldset='question1') 
+				input(type='radio' name='question1' value='1' fieldset='question1' checked) 
 				label Be illiterate
 				input(type='radio' name='question1' value='0' fieldset='question1') 
 				label Take everything literally
+			else
+				input(type='radio' name='question1' value='1' fieldset='question1') 
+				label Be illiterate
+				input(type='radio' name='question1' value='0' fieldset='question1' checked) 
+				label Take everything literally
 		fieldset(id='question2')
 			label Would you rather: 
-			input(type='radio' name='question2' value='1' fieldset='question2') 
-			label Only be able to laugh at blonde jokes
-			input(type='radio' name='question2' value='0' fieldset='question2') 
-			label Not be able to understand sarcasm
+			if(user.secondAnswer)
+				input(type='radio' name='question2' value='1' fieldset='question2' checked) 
+				label Only be able to laugh at blonde jokes
+				input(type='radio' name='question2' value='0' fieldset='question2') 
+				label Not be able to understand sarcasm
+			else
+				input(type='radio' name='question2' value='1' fieldset='question2') 
+				label Only be able to laugh at blonde jokes
+				input(type='radio' name='question2' value='0' fieldset='question2' checked) 
+				label Not be able to understand sarcasm
 		fieldset(id='question3')
 			label Would you rather: 
-			input(type='radio' name='question3' value='1' fieldset='question3') 
-			label Sleep in a room that's slightly too warm
-			input(type='radio' name='question3' value='0' fieldset='question3') 
-			label Sleep in a room that's slightly too cold
+			if(user.thirdAnswer)
+				input(type='radio' name='question3' value='1' fieldset='question3' checked) 
+				label Sleep in a room that's slightly too warm
+				input(type='radio' name='question3' value='0' fieldset='question3') 
+				label Sleep in a room that's slightly too cold
+			else
+				input(type='radio' name='question3' value='1' fieldset='question3') 
+				label Sleep in a room that's slightly too warm
+				input(type='radio' name='question3' value='0' fieldset='question3' checked) 
+				label Sleep in a room that's slightly too cold
 		br
-		input(type='submit' value='Submit')
+		input(type='submit' value='Submit Changes')

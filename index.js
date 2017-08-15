@@ -22,5 +22,6 @@ app.use(expressSession({
 
 app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);
+app.post('/signup', bodyParser, route.createPerson);
 
 app.listen(3000);
