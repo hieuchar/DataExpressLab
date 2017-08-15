@@ -23,8 +23,6 @@ exports.route = function (req, res) { // Route template
 };
 
 exports.index = function (req, res) {    
-    
-  console.log(req.sessionID);
 	res.render('index');
 };
 
