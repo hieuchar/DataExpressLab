@@ -27,5 +27,8 @@ app.use(expressSession({
 app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);
 app.post('/signup', urlencodedParser, route.createUser);
+app.get('/details', route.viewDetails);
+app.get('/edit-profile', route.editDetails);
+app.post('/edit-profile', urlencodedParser, route.submitChanges);
 
 app.listen(3000);
