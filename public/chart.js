@@ -1,4 +1,4 @@
-console.log(document);
+
 
 var c = document.getElementById('chart1');
 var chart1 = c.getContext("2d");
