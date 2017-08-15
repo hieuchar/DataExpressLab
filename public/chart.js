@@ -20,19 +20,19 @@ chart2.stroke();
 
 
 chart3.beginPath();
-chart3.arc(Math.floor(c.width / 2), Math.floor(c.height / 2), 50, 0 , 3, true);
+drawChart();
 chart3.stroke();
+
+
+
 
 function drawChart(){
   var startingangle;
   var endangle;
-  
+  chart3.arc(Math.floor(c.width / 2), Math.floor(c.height / 2), 50, 0 , 3, true);
 }
 
 function convertPercentToRadians(percent){
   return (percent * 360 * Math.PI) / 180;
 }
 
-function getCookie(){
-  var cookie = document.cookie;
-}
