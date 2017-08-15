@@ -12,8 +12,12 @@ app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 app.use(express.static(path.join(__dirname + '/public')));
 
+var urlencodedParser = bodyParser.urlencoded({
+  extended: true
+})
+
 app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);
-app.post('/signup', bodyParser, route.createPerson);
+app.post('/signup', urlencodedParser, route.createUser);
 
 app.listen(3000);
