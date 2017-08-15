@@ -32,3 +32,7 @@ function drawChart(){
 function convertPercentToRadians(percent){
   return (percent * 360 * Math.PI) / 180;
 }
+
+function getCookie(){
+  var cookie = document.cookie;
+}
