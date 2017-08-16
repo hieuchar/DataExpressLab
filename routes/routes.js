@@ -69,18 +69,16 @@ exports.createUser = function(req, res) {
 		var user = new User({
 			username: req.body.username,
 			age: req.body.age,
-			password: hash,
+			password: hash;
 			question1: req.body.question1 == 1,
 			question2: req.body.question2 == 1,
-			question3: req.body.question3 == 1,
-			isAdmin: req.body.userType == 1
+			question3: req.body.question3 == 1
 		});
 		user.save(function (err, person) {
-  	  if (err) return console.error(err);
-  	  console.log(req.body.username + ' added');
-  	});
-		
-  	res.redirect('/');
+			if (err) return console.error(err);
+			console.log(req.body.username + ' added');
+		});
+		res.redirect('/');
 	});
 }
 
