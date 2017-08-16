@@ -2,8 +2,7 @@ var express = require('express'),
 		expressSession = require('express-session'),
 		path = require('path'),
 		pug = require('pug'),
-		bodyParser = require('body-parser'),		
-		bcrypt = require('bcrypt-nodejs'),
+		bodyParser = require('body-parser'),
 		route = require('./routes/routes.js');
 var mongoose = require('mongoose');
 
