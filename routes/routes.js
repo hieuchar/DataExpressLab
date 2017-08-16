@@ -13,7 +13,7 @@ mdb.once('open', function (callback) { // There wasn't anything in here in the d
 var userSchema = mongoose.Schema({ // Put the schema for our data in here
 	username: String,
 	password: String,
-	age: int,
+	age: Number,
 	question1: Boolean,
 	question2: Boolean,
 	question3: Boolean,
@@ -72,8 +72,8 @@ exports.createUser = function(req, res) {
 			var user = new User({
 				username: req.body.username,
 				age: req.body.age,
-				password: hash;
-				question1: req.body.question1 == 1,
+				password: hash,
+                question1: req.body.question1 == 1,
 				question2: req.body.question2 == 1,
 				question3: req.body.question3 == 1
 			});
