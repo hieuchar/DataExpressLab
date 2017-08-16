@@ -24,12 +24,6 @@ app.use(expressSession({
   expires: true
 }));
 
-function getData(){
-	User.find(function(err, users){
-		 if (err) return console.error(err);
-		 console.log(users);     
-		});	
-}
 
 app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);

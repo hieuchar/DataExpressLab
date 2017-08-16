@@ -25,7 +25,7 @@ exports.route = function (req, res) { // Route template
 exports.index = function (req, res) {    
 	User.find(function(err, users){
 		 if (err) return console.error(err);
-		 console.log(users);
+		 
 		 var firstQ = 0;
 		 var secondQ = 0;
 		 var thirdQ = 0;		 
@@ -34,9 +34,7 @@ exports.index = function (req, res) {
 			secondQ += user.question2 ? 1 : 0;
 			thirdQ += user.question3 ? 1 : 0;
 		});
-     res.render('index', {
-      title: 'Home Page',
-      users: users,
+     res.render('index', {      
 			data: [firstQ, secondQ, thirdQ, users.length]
 		});
 	});	
