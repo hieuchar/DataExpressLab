@@ -13,7 +13,7 @@ mdb.once('open', function (callback) { // There wasn't anything in here in the d
 var userSchema = mongoose.Schema({ // Put the schema for our data in here
 	username: String,
 	password: String,
-	age: int,
+	age: Number,
 	question1: Boolean,
 	question2: Boolean,
 	question3: Boolean,
@@ -65,29 +65,23 @@ exports.signup = function(req, res) {
 	res.render('sign-up');
 }
 exports.createUser = function(req, res) {
-	// Check if valid data first
-	var errors = false
-	if(!errors) {
-		bcrypt.hash(req.body.password, null, null, function(err, hash) {
-			var user = new User({
-				username: req.body.username,
-				age: req.body.age,
-				password: hash;
-				question1: req.body.question1 == 1,
-				question2: req.body.question2 == 1,
-				question3: req.body.question3 == 1
-			});
-			user.save(function (err, person) {
-  		  if (err) return console.error(err);
-  		  console.log(req.body.username + ' added');
-  		});
-			
-  		res.redirect('/');
+	bcrypt.hash(req.body.password, null, null, function(err, hash) {
+		var user = new User({
+			username: req.body.username,
+			age: req.body.age,
+			password: hash,
+			question1: req.body.question1 == 1,
+			question2: req.body.question2 == 1,
+			question3: req.body.question3 == 1,
+			isAdmin: req.body.userType == 1
 		});
-	}
-	else {
-		// Back to origninal page
-	}
+		user.save(function (err, person) {
+  	  if (err) return console.error(err);
+  	  console.log(req.body.username + ' added');
+  	});
+		
+  	res.redirect('/');
+	});
 }
 
 exports.viewDetails = function(req, res) {

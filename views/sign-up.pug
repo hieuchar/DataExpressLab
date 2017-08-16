@@ -16,23 +16,28 @@ block content
 		br
 		fieldset(id='question1')
 			label Would you rather: 
-			input(type='radio' name='question1' value='1' fieldset='question1') 
+			input(type='radio' name='question1' value='1' fieldset='question1' checked) 
 			label Be illiterate
 			input(type='radio' name='question1' value='0' fieldset='question1') 
 			label Take everything literally
 		fieldset(id='question2')
 			label Would you rather: 
-			input(type='radio' name='question2' value='1' fieldset='question2') 
+			input(type='radio' name='question2' value='1' fieldset='question2' checked) 
 			label Only be able to laugh at blonde jokes
 			input(type='radio' name='question2' value='0' fieldset='question2') 
 			label Not be able to understand sarcasm
 		fieldset(id='question3')
 			label Would you rather: 
-			input(type='radio' name='question3' value='1' fieldset='question3') 
+			input(type='radio' name='question3' value='1' fieldset='question3' checked) 
 			label Sleep in a room that's slightly too warm
 			input(type='radio' name='question3' value='0' fieldset='question3') 
 			label Sleep in a room that's slightly too cold
-		br
+		fieldset(id='userType')
+			label What type of user are you?
+			input(type='radio' name='userType' value='0' fieldset='userType' checked)
+			label Normal
+			input(type='radio' name='userType' value='1' fieldset='userType')
+			label Admin
 		input(type='submit' value='Submit')
 		
 	
