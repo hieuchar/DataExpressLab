@@ -5,7 +5,7 @@ var express = require('express'),
 		bodyParser = require('body-parser'),		
 		bcrypt = require('bcrypt-nodejs'),
 		route = require('./routes/routes.js');
-        
+var mongoose = require('mongoose');
 
 var app = express();
 app.set('view engine', 'pug');
@@ -23,6 +23,13 @@ app.use(expressSession({
   resave: true,
   expires: true
 }));
+
+function getData(){
+	User.find(function(err, users){
+		 if (err) return console.error(err);
+		 console.log(users);     
+		});	
+}
 
 app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);

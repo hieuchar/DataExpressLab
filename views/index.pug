@@ -1,9 +1,13 @@
 extends layout
 block content
-  
-  p Main page
-  canvas(id='chart1')
-  canvas(id='chart2')
-  canvas(id='chart3')
-  p(id='lastVisit')
-  script(type="text/javascript" src="./chart.js")
+	p Main page
+	canvas(id='chart1')
+	canvas(id='chart2')
+	canvas(id='chart3')
+	p(id='lastVisit')
+	div
+		p #{data[0]}
+		p #{data[1]}
+		p #{data[2]}
+		p #{data[3]}
+	script(type="text/javascript" src="./chart.js")

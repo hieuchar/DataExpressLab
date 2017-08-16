@@ -23,7 +23,23 @@ exports.route = function (req, res) { // Route template
 };
 
 exports.index = function (req, res) {    
-	res.render('index');
+	User.find(function(err, users){
+		 if (err) return console.error(err);
+		 console.log(users);
+		 var firstQ = 0;
+		 var secondQ = 0;
+		 var thirdQ = 0;		 
+		users.forEach(function(user){
+			firstQ += user.question1 ? 1 : 0;
+			secondQ += user.question2 ? 1 : 0;
+			thirdQ += user.question3 ? 1 : 0;
+		});
+     res.render('index', {
+      title: 'Home Page',
+      users: users,
+			data: [firstQ, secondQ, thirdQ, users.length]
+		});
+	});	
 };
 
 exports.login = function (req, res) {
@@ -56,7 +72,7 @@ exports.createUser = function(req, res) {
     if (err) return console.error(err);
     console.log(req.body.username + ' added');
   });
-  res.redirect('/'); // Redirect to view details instead?
+  res.redirect('/'); // Redirect to view details instead?	
 }
 
 exports.viewDetails = function(req, res) {
