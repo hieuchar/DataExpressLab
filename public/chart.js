@@ -11,37 +11,37 @@ var total = document.getElementById('amount').innerHTML;
 drawChart(chart1, document.getElementById('q1').innerHTML);
 drawChart(chart2, document.getElementById('q2').innerHTML);
 drawChart(chart3, document.getElementById('q3').innerHTML);
-
-
 function drawChart(chart, amount){
-	
-	//draw the first arc 
-	chart.beginPath();
-	//move to the center
-	chart.moveTo(Math.floor(c.width / 2), Math.floor(c.height / 2));
-	//convert the amount of people into a percentage and then into radians
-  var currAngle = convertPercentToRadians(amount / total);
-	//set the ending of the arc
+	var remainder = total - amount;
+	//draw the first bar 
+	chart.beginPath(); 
+
   
 	//choose the color
 	chart.fillStyle = "#3370d4";
-	//draw in the arc
-  chart.arc(Math.floor(c.width / 2), Math.floor(c.height / 2), 50, 0, currAngle, true);	
+	//draw in the rectangle  
+	chart.rect(Math.floor(c.width/8),Math.floor(c.height - (amount/total) * c.height), Math.floor(c.width/4), c.height)
 	chart.fill();
+	chart.fillStyle ="#000000";
+	chart.fillText((amount/total).toFixed(2) + "%", Math.floor(c.width/8),Math.floor(c.height - (amount/total) * c.height) - 2)
 	chart.closePath();
 	
-	//draw the second arc
+	//draw the second bar
 	chart.beginPath();
-	chart.moveTo(Math.floor(c.width / 2), Math.floor(c.height / 2));
 	
 	chart.fillStyle = "#ef581c";
-	chart.arc(Math.floor(c.width / 2), Math.floor(c.height / 2), 50, currAngle, Math.PI * 2, true);
+	console.log((remainder/total) * c.height);	
+	chart.rect(Math.floor(c.width/8 * 4), Math.floor(c.height - (remainder/total) * c.height), Math.floor(c.width/4) ,c.height)
+	chart.rect(Math.floor(c.width/8 * 4),  300, 10, 10);
 	chart.fill();
+	chart.fillStyle ="#000000";
+	chart.fillText(((total - amount)/total).toFixed(2) + "%", Math.floor(c.width/8 * 4),
+								 Math.floor(c.height - ((total-amount)/total) * c.height) - 2)
 	chart.closePath();
-	
-	chart.fillText((amount / total).toFixed(2) + "%", c.width / 2 - 20, 50);
+	chart.fillStyle ="#000000";
+	chart.font = "15px Times New Roman";		
 }
+chart1.fillText("Illiterate(Blue) vs take everything literally", 0, 50);
+chart2.fillText("Blonde jokes only(Blue) vs no sarcasm", 0, 50);
+chart3.fillText("Too cold vs too warm(Blue)", 0, 50);
 
-function convertPercentToRadians(percent){
-  return (percent * 360 * Math.PI) / 180;
-}

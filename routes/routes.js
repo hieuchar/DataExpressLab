@@ -59,7 +59,10 @@ exports.tryLogin = function (req, res) {
 		res.render('login')
 	}
 }
-
+exports.logout = function (req, res){
+	req.session.destroy();
+  res.send("Logout successful!");
+}
 exports.signup = function(req, res) {
 	res.render('sign-up');
 }
@@ -68,7 +71,7 @@ exports.createUser = function(req, res) {
 		var user = new User({
 			username: req.body.username,
 			age: req.body.age,
-			password: hash;
+			password: hash,
 			question1: req.body.question1 == 1,
 			question2: req.body.question2 == 1,
 			question3: req.body.question3 == 1
