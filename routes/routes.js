@@ -22,10 +22,6 @@ var userSchema = mongoose.Schema({ // Put the schema for our data in here
 
 var User = mongoose.model('User_Collection', userSchema);
 
-exports.route = function (req, res) { // Route template
-  
-};
-
 exports.index = function (req, res) {    
 	User.find(function(err, users){
 		 if (err) return console.error(err);
@@ -78,7 +74,7 @@ exports.admin = function(req, res) {
     if (err) return console.error(err);
     res.render('admin', {
       title: 'Users List',
-      people: user
+      people: users
     });
   });
 }
