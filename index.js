@@ -31,5 +31,6 @@ app.get('/details', route.viewDetails);
 app.get('/edit-profile', route.editDetails);
 app.post('/edit-profile', urlencodedParser, route.submitChanges);
 app.get('/login', route.login);
+app.get('/logout', route.logout);
 
 app.listen(3000);
