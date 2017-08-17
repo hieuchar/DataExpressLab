@@ -20,7 +20,7 @@ function drawChart(chart, amount){
 	//choose the color
 	chart.fillStyle = "#3370d4";
 	//draw in the rectangle  
-	chart.rect(Math.floor(c.width/8),Math.floor(c.height - (amount/total) * c.height), Math.floor(c.width/4), c.height)
+	chart.rect(Math.floor(c.width/8),Math.floor((c.height- 25 - (amount/total)) * (c.height - 25)), Math.floor(c.width/4), c.height)
 	chart.fill();
 	chart.fillStyle ="#000000";
 	chart.fillText((amount/total).toFixed(2) + "%", Math.floor(c.width/8),Math.floor(c.height - (amount/total) * c.height) - 2)
@@ -31,7 +31,7 @@ function drawChart(chart, amount){
 	
 	chart.fillStyle = "#ef581c";
 	console.log((remainder/total) * c.height);	
-	chart.rect(Math.floor(c.width/8 * 4), Math.floor(c.height - (remainder/total) * c.height), Math.floor(c.width/4) ,c.height)
+	chart.rect(Math.floor(c.width/8 * 4), Math.floor(c.height - 25 - (remainder/total) * (c.height - 25), Math.floor(c.width/4) ,c.height)
 	chart.rect(Math.floor(c.width/8 * 4),  300, 10, 10);
 	chart.fill();
 	chart.fillStyle ="#000000";
