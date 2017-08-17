@@ -48,28 +48,22 @@ exports.login = function (req, res) {
 	res.render('login')
 }
 exports.tryLogin = function (req, res) {
-	var sucess = false;
+	var success = false;
 	
 	var usersArray = User.find({ username: req.body.username }, function(err, users) {
 		if(err) return console.error(err);
-		console.log(users);
-		
-		var user = usersArray[0];
-		
-		bcrypt.compare(req.body.password, user.password, function(err, res) {
-			if(res) {
-				// Create session
-				sucess = true;
+		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
+			if(result) {
+				req.session.name = req.body.username;
+				req.session.isLoggedIn = true;
+				success = true;
+				res.redirect('/');
+			}
+			else{
+				res.redirect('/login');
 			}
 		});
 	});
-	
-	if(sucess) {
-		res.redirect('/');
-	}
-	else {
-		res.render('login')
-	}
 }
 exports.logout = function (req, res){
 	req.session.destroy();

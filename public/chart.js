@@ -43,5 +43,5 @@ function drawChart(chart, amount){
 }
 chart1.fillText("Illiterate(Blue) vs take everything literally", 0, 50);
 chart2.fillText("Blonde jokes only(Blue) vs no sarcasm", 0, 50);
-chart3.fillText("Too cold vs too warm(Blue)", 0, 50);
+chart3.fillText("Too warm(Blue) vs too cold", 0, 50);
 

@@ -16,9 +16,8 @@ var urlencodedParser = bodyParser.urlencoded({
 })
 
 app.use(expressSession({
-  name: 'loggedIn',
   saveUninitialized: true,
-	secret: "yes",
+	secret: 'LoggedIn',
   resave: true,
   expires: true
 }));
