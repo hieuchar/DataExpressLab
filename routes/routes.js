@@ -50,9 +50,18 @@ exports.login = function (req, res) {
 exports.tryLogin = function (req, res) {
 	var sucess = false;
 	
-	var user = User.find({ username: req.body.username }, function(err, users) {
+	var usersArray = User.find({ username: req.body.username }, function(err, users) {
 		if(err) return console.error(err);
 		console.log(users);
+		
+		var user = usersArray[0];
+		
+		bcrypt.compare(req.body.password, user.password, function(err, res) {
+			if(res) {
+				// Create session
+				sucess = true;
+			}
+		});
 	});
 	
 	
