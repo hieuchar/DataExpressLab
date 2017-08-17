@@ -72,6 +72,17 @@ exports.logout = function (req, res){
 exports.signup = function(req, res) {
 	res.render('sign-up');
 }
+
+exports.admin = function(req, res) {
+	User.find(function (err, users) {
+    if (err) return console.error(err);
+    res.render('admin', {
+      title: 'Users List',
+      people: user
+    });
+  });
+}
+
 exports.createUser = function(req, res) {
 	bcrypt.hash(req.body.password, null, null, function(err, hash) {
 		var user = new User({
