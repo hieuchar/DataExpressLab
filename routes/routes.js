@@ -91,8 +91,6 @@ exports.createUser = function(req, res) {
 	
 	if(newUsername) {
 		bcrypt.hash(req.body.password, null, null, function(err, hash) {
-			
-			
 			var user = new User({
 				username: req.body.username,
 				age: req.body.age,
@@ -102,10 +100,12 @@ exports.createUser = function(req, res) {
 				question3: req.body.question3 == 1,
 				isAdmin: req.body.userType == 1
 			});
+			
 			user.save(function (err, person) {
 				if (err) return console.error(err);
 				console.log(req.body.username + ' added');
 			});
+			
 			res.redirect('/');
 		});
 	}

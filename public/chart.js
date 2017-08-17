@@ -32,7 +32,6 @@ function drawChart(chart, amount){
 	
 	chart.fillStyle = "#ef581c";
 	chart.rect(Math.floor(c.width/8 * 4), Math.floor(height - (remainder/total) * (height)), Math.floor(c.width/4) ,c.height)
-	chart.rect(Math.floor(c.width/8 * 4),  300, 10, 10);
 	chart.fill();
 	chart.fillStyle ="#000000";
 	chart.fillText(((total - amount)/total).toFixed(2) + "%", Math.floor(c.width/8 * 4),
@@ -43,5 +42,5 @@ function drawChart(chart, amount){
 }
 chart1.fillText("Illiterate(Blue) vs take everything literally", 0, 50);
 chart2.fillText("Blonde jokes only(Blue) vs no sarcasm", 0, 50);
-chart3.fillText("Too cold vs too warm(Blue)", 0, 50);
+chart3.fillText("Too warm(Blue) vs too cold", 0, 50);
 
