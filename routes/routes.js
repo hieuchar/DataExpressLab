@@ -50,7 +50,11 @@ exports.login = function (req, res) {
 exports.tryLogin = function (req, res) {
 	var sucess = false;
 	
-	// validate cridentials
+	var user = User.find({ username: req.body.username }, function(err, users) {
+		if(err) return console.error(err);
+		console.log(users);
+	});
+	
 	
 	if(sucess) {
 		res.redirect('/');
