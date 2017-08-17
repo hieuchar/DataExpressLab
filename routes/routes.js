@@ -73,28 +73,44 @@ exports.tryLogin = function (req, res) {
 }
 exports.logout = function (req, res){
 	req.session.destroy();
-  res.send("Logout successful!");
+  res.redirect('/');
 }
 exports.signup = function(req, res) {
-	res.render('sign-up');
+	res.render('sign-up', { usernameExists: false });
 }
 exports.createUser = function(req, res) {
-	bcrypt.hash(req.body.password, null, null, function(err, hash) {
-		var user = new User({
-			username: req.body.username,
-			age: req.body.age,
-			password: hash,
-			question1: req.body.question1 == 1,
-			question2: req.body.question2 == 1,
-			question3: req.body.question3 == 1,
-			isAdmin: req.body.userType == 1
-		});
-		user.save(function (err, person) {
-			if (err) return console.error(err);
-			console.log(req.body.username + ' added');
-		});
-		res.redirect('/');
+	var newUsername = true;
+	User.find(function(err, users) {
+		for(var x = 0; x < users.length && newUsername; x++) {
+			if(users[x].username === req.body.username) {
+				newUsername = false;
+			}
+		}
 	});
+	
+	if(newUsername) {
+		bcrypt.hash(req.body.password, null, null, function(err, hash) {
+			
+			
+			var user = new User({
+				username: req.body.username,
+				age: req.body.age,
+				password: hash,
+				question1: req.body.question1 == 1,
+				question2: req.body.question2 == 1,
+				question3: req.body.question3 == 1,
+				isAdmin: req.body.userType == 1
+			});
+			user.save(function (err, person) {
+				if (err) return console.error(err);
+				console.log(req.body.username + ' added');
+			});
+			res.redirect('/');
+		});
+	}
+	else {
+		res.render('sign-up', { usernameExists: true })
+	}
 }
 
 exports.viewDetails = function(req, res) {
