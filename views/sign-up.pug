@@ -1,7 +1,7 @@
 extends layout
 
 block content
-	form(id='form' method='post' action='/signup')
+	form(id='form' method='post' onsubmit='return validate();' action='/signup')
 		label Username	
 		input(type='text' name='username')
 		br
@@ -39,5 +39,6 @@ block content
 			input(type='radio' name='userType' value='1' fieldset='userType')
 			label Admin
 		input(type='submit' value='Submit')
-		
+	div(id='response')
+	script(type="text/javascript" src="./validation.js")
 	
