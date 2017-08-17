@@ -69,10 +69,11 @@ exports.createUser = function(req, res) {
 		var user = new User({
 			username: req.body.username,
 			age: req.body.age,
-			password: hash;
+			password: hash,
 			question1: req.body.question1 == 1,
 			question2: req.body.question2 == 1,
-			question3: req.body.question3 == 1
+			question3: req.body.question3 == 1,
+			isAdmin: req.body.userType == 1
 		});
 		user.save(function (err, person) {
 			if (err) return console.error(err);
@@ -92,4 +93,5 @@ exports.editDetails = function(req, res) {
 }
 exports.submitChanges = function(req, res) {
 	// Create the changes in the database
+	// This should basically be the same as create user, except you're modifying and existing object
 }
