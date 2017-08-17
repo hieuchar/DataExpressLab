@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  tr
+        td #{item.name}
+        td #{item.password}
+        td #{item.age}
+        td #{item.question1}
+        td #{item.question2}
+        td #{item.question3}
+          a(href='/edit/' + item.id) Edit
+        td
+          a(href='/delete/' + item.id) Delete
+  br
+  #menu
+    a(href='/') Go back
