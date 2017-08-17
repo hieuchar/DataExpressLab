@@ -29,7 +29,7 @@ exports.route = function (req, res) { // Route template
 exports.index = function (req, res) {    
 	User.find(function(err, users){
 		 if (err) return console.error(err);
-		 console.log(users);
+		 
 		 var firstQ = 0;
 		 var secondQ = 0;
 		 var thirdQ = 0;		 
@@ -38,8 +38,7 @@ exports.index = function (req, res) {
 			secondQ += user.question2 ? 1 : 0;
 			thirdQ += user.question3 ? 1 : 0;
 		});
-     res.render('index', {
-      title: 'Home Page',
+     res.render('index', {      
 			data: [firstQ, secondQ, thirdQ, users.length]
 		});
 	});	
@@ -60,7 +59,10 @@ exports.tryLogin = function (req, res) {
 		res.render('login')
 	}
 }
-
+exports.logout = function (req, res){
+	req.session.destroy();
+  res.send("Logout successful!");
+}
 exports.signup = function(req, res) {
 	res.render('sign-up');
 }

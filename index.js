@@ -16,19 +16,13 @@ var urlencodedParser = bodyParser.urlencoded({
 })
 
 app.use(expressSession({
-  name: 'lastVisit',
-  secret: new Date().toLocaleDateString(),
+  name: 'loggedIn',
   saveUninitialized: true,
+	secret: "yes",
   resave: true,
   expires: true
 }));
 
-function getData(){
-	User.find(function(err, users){
-		 if (err) return console.error(err);
-		 console.log(users);     
-		});	
-}
 
 app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);
@@ -37,5 +31,6 @@ app.get('/details', route.viewDetails);
 app.get('/edit-profile', route.editDetails);
 app.post('/edit-profile', urlencodedParser, route.submitChanges);
 app.get('/login', route.login);
+app.get('/logout', route.logout);
 
 app.listen(3000);

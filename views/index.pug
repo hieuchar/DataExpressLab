@@ -1,13 +1,12 @@
 extends layout
 block content
 	p Main page
-	canvas(id='chart1')
-	canvas(id='chart2')
-	canvas(id='chart3')
-	p(id='lastVisit')
+	canvas(id='chart1' height = 400)
+	canvas(id='chart2' height = 400)
+	canvas(id='chart3' height = 400)
 	div
-		p #{data[0]}
-		p #{data[1]}
-		p #{data[2]}
-		p #{data[3]}
+		p(hidden id='q1') #{data[0]}
+		p(hidden id='q2') #{data[1]}
+		p(hidden id='q3') #{data[2]}
+		p(hidden id='amount') #{data[3]}
 	script(type="text/javascript" src="./chart.js")
