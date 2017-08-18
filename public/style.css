@@ -8,3 +8,35 @@ body {
   padding: 20px;
   background-color: #FDFF84;
 }
+#navbar {
+    background: #C22425;
+    height: 30px;
+    color: white;
+    text-align: center;
+}
+
+#navbar ul {
+  list-style: none;
+  margin: 0;
+  padding-top: 4px;
+}
+
+#navbar ul li {
+  padding: 4px;
+  padding-right: 15px;
+  display: inline;
+}
+
+.navbutton {
+  text-decoration: none;
+  color: white;
+  font-size: 14pt;
+  padding: 4px 5px;
+  -webkit-transition: padding 0.5s;
+  transition: padding 0.5s;
+}
+
+.navbutton:hover {
+  padding: 4px 15px;
+  background-color: #ED0C00;
+}

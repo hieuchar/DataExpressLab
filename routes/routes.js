@@ -25,7 +25,15 @@ var User = mongoose.model('User_Collection', userSchema);
 exports.route = function (req, res) { // Route template
   
 };
-
+var config = {
+  "routes": [
+      ["Home", "/"],
+      ["Profile", "/profile"],
+      ["Login", "/login"],
+      ["Sign up", "/signup"],
+      ["Admin only", "/admin"]
+  ]
+};
 exports.index = function (req, res) {    
 	User.find(function(err, users){
 		 if (err) return console.error(err);
@@ -39,52 +47,50 @@ exports.index = function (req, res) {
 			thirdQ += user.question3 ? 1 : 0;
 		});
      res.render('index', {      
-			data: [firstQ, secondQ, thirdQ, users.length]
+			data: [firstQ, secondQ, thirdQ, users.length],
+			 config: config
 		});
 	});	
 };
 
 exports.login = function (req, res) {
-	res.render('login')
+	res.render('login', {
+						 config: config
+						 });
 }
 exports.tryLogin = function (req, res) {
-	var sucess = false;
+	var success = false;
 	
 	var usersArray = User.find({ username: req.body.username }, function(err, users) {
 		if(err) return console.error(err);
-		console.log(users);
-		
-		var user = usersArray[0];
-		
-		bcrypt.compare(req.body.password, user.password, function(err, res) {
-			if(res) {
-				// Create session
-				sucess = true;
+		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
+			if(result) {
+				req.session.name = req.body.username;
+				req.session.isLoggedIn = true;
+				success = true;
+				res.redirect('/');
+			}
+			else{
+				res.redirect('/login');
 			}
 		});
 	});
-	
-	if(sucess) {
-		res.redirect('/');
-	}
-	else {
-		res.render('login')
-	}
 }
 exports.logout = function (req, res){
 	req.session.destroy();
   res.send("Logout successful!");
 }
 exports.signup = function(req, res) {
-	res.render('sign-up');
+	res.render('sign-up', {
+		config: config
+	});
 }
 
 exports.admin = function(req, res) {
 	User.find(function (err, users) {
     if (err) return console.error(err);
     res.render('admin', {
-      title: 'Users List',
-      people: users
+      title: 'Users List', people: users, config: config
     });
   });
 }
@@ -107,14 +113,17 @@ exports.createUser = function(req, res) {
 		res.redirect('/');
 	});
 }
-
 exports.viewDetails = function(req, res) {
 	// Get user data from session
-	res.render('user-details')
+	res.render('user-details', {
+		config: config
+	})
 }
 exports.editDetails = function(req, res) {
 	// Get user data from session
-	res.render('edit-details')
+	res.render('edit-details', {
+		config: config
+	})
 }
 exports.submitChanges = function(req, res) {
 	// Create the changes in the database
