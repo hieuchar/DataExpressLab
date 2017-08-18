@@ -24,14 +24,13 @@ var User = mongoose.model('User_Collection', userSchema);
 
 var config = {
   "routes": [
-      ["Home", "/"],
-      ["Profile", "/profile"],
-      ["Login", "/login"],
+      ["Home", "/"],      
       ["Sign up", "/signup"],
-      ["Admin only", "/admin"]
+		  ["Login", "/login"]
   ]
 };
-exports.index = function (req, res) {    
+exports.index = function (req, res) {   
+	console.log(req.session);
 	User.find(function(err, users){
 		 if (err) return console.error(err);
 		 
@@ -43,10 +42,43 @@ exports.index = function (req, res) {
 			secondQ += user.question2 ? 1 : 0;
 			thirdQ += user.question3 ? 1 : 0;
 		});
+		if(req.session.isLoggedIn && req.session.isAdmin){
 			res.render('index', {
 				data: [firstQ, secondQ, thirdQ, users.length],
-				config: config
+				config: {
+  				"routes": [
+							["Home", "/"],
+							["Profile", "/profile"],							
+							["Admin ", "/admin"],
+						  ["Logout", "/logout"]
+  				]
+				}
+			});
+		}
+		else if(req.session.isLoggedIn ){
+			res.render('index', {
+				data: [firstQ, secondQ, thirdQ, users.length],
+				config: {
+  				"routes": [
+							["Home", "/"],
+							["Profile", "/profile"],							
+						  ["Logout", "/logout"]
+  				]
+				}
+			});
+		}
+		else{
+			res.render('index', {
+				data: [firstQ, secondQ, thirdQ, users.length],
+				config: {
+  				"routes": [
+							["Home", "/"],						
+							["Sign up", "/signup"],							
+						  ["Login", "/login"]
+  				]
+				}
 		});
+		}
 	});	
 };
 
@@ -63,13 +95,16 @@ exports.tryLogin = function (req, res) {
 		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
 				success = true;
 				req.session.username = req.body.username;
-			console.log(req.session);
+			  req.session.isAdmin = users[0].isAdmin;
+			  req.session.isLoggedIn = true;
+			  console.log(req.session);
 				res.redirect('/');			
 		});
 	});
 }
 exports.logout = function (req, res){
 	req.session.destroy();
+	console.log(req.session);
 	res.redirect('/');
 }
 exports.signup = function(req, res) {
@@ -79,6 +114,7 @@ exports.signup = function(req, res) {
 }
 
 exports.admin = function(req, res) {
+	if(req.session.isAdmin){
 	User.find(function (err, users) {
     if (err) return console.error(err);
     res.render('admin', {
@@ -87,6 +123,10 @@ exports.admin = function(req, res) {
       config: config
     });
   });
+	}
+	else{
+		res.send("You need to be an admin to do this.")
+	}
 }
 exports.deleteUser = function(req, res) {
 	// if signed-in user is admin
@@ -139,10 +179,15 @@ exports.createUser = function(req, res) {
 	}
 }
 exports.viewDetails = function(req, res) {
+	if(req.session.isLoggedIn){
 	// Get user data from session
 	res.render('user-details', {
 		config: config
 	})
+	}
+	else{
+		res.redirect('/');
+	}
 }
 exports.editDetails = function(req, res) {
 	// Get user data from session
