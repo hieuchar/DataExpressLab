@@ -31,13 +31,13 @@ var config = {
       ["Admin only", "/admin"]
   ]
 };
-exports.index = function (req, res) {    
+exports.index = function (req, res) {
 	User.find(function(err, users){
 		 if (err) return console.error(err);
 		 
 		 var firstQ = 0;
 		 var secondQ = 0;
-		 var thirdQ = 0;		 
+		 var thirdQ = 0;
 		users.forEach(function(user){
 			firstQ += user.question1 ? 1 : 0;
 			secondQ += user.question2 ? 1 : 0;
@@ -47,7 +47,7 @@ exports.index = function (req, res) {
 				data: [firstQ, secondQ, thirdQ, users.length],
 				config: config
 		});
-	});	
+	});
 };
 
 exports.login = function (req, res) {
@@ -141,10 +141,37 @@ exports.createUser = function(req, res) {
 	}
 }
 exports.viewDetails = function(req, res) {
-	// Get user data from session
-	res.render('user-details', {
-		config: config
-	})
+	var user = User.find({ username: req.session.username }, function(err, users) {
+		if(err) return console.error(err);
+		var firstBlurb, secondBlurb, thridBlurb;
+		
+		if(user.question1) {
+			
+		}
+		else {
+			
+		}
+		if(user.question1) {
+			
+		}
+		else {
+			
+		}
+		if(user.question1) {
+			
+		}
+		else {
+			
+		}
+		
+		res.render('user-details', {
+			config: config,
+			user: {
+				age: user.age;
+			}
+		});
+	}
+	
 }
 exports.editDetails = function(req, res) {
 	// Get user data from session
