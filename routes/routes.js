@@ -62,7 +62,7 @@ exports.index = function (req, res) {
 				config: {
   				"routes": [
 							["Home", "/"],
-							["Profile", "/details"],							
+							["Profile", "/details"],
 						  ["Logout", "/logout"]
   				]
 				}
@@ -73,8 +73,8 @@ exports.index = function (req, res) {
 				data: [firstQ, secondQ, thirdQ, users.length],
 				config: {
   				"routes": [
-							["Home", "/"],						
-							["Sign up", "/signup"],							
+							["Home", "/"],
+							["Sign up", "/signup"],
 						  ["Login", "/login"]
   				]
 				}
@@ -106,41 +106,11 @@ exports.logout = function (req, res){
 	console.log(req.session);
 	res.redirect('/');
 }
-
 exports.signup = function(req, res) {
 	res.render('sign-up', {
 		usernameExists: false, config: config
 	});
 }
-
-exports.admin = function(req, res) {
-	if(req.session.isAdmin){
-		User.find(function (err, users) {
-			if (err) return console.error(err);
-			res.render('admin', {
-				title: 'Users List',
-				people: users,
-				config: config
-			});
-		});
-	}
-}
-exports.deleteUser = function(req, res) {
-	// if signed-in user is admin
-		// Delete user with the specified username
-		res.redirect('/admin');
-	// else
-		res.redirect('/');
-}
-exports.makeUserAdmin = function(req,res) {
-	// if signed-in user is admin
-		// Fetch specified user
-		// Change isAdmin to true
-		res.redirect('/admin');
-	// else
-		res.redirect('/');
-}
-
 exports.createUser = function(req, res) {
 	var newUsername = true;
 	User.find(function(err, users) {
@@ -175,6 +145,35 @@ exports.createUser = function(req, res) {
 		res.render('sign-up', { usernameExists: true })
 	}
 }
+
+exports.admin = function(req, res) {
+	if(req.session.isAdmin){
+		User.find(function (err, users) {
+			if (err) return console.error(err);
+			res.render('admin', {
+				title: 'Users List',
+				people: users,
+				config: config
+			});
+		});
+	}
+}
+exports.deleteUser = function(req, res) {
+	// if signed-in user is admin
+		// Delete user with the specified username
+		res.redirect('/admin');
+	// else
+		res.redirect('/');
+}
+exports.makeUserAdmin = function(req,res) {
+	// if signed-in user is admin
+		// Fetch specified user
+		// Change isAdmin to true
+		res.redirect('/admin');
+	// else
+		res.redirect('/');
+}
+
 exports.viewDetails = function(req, res) {
 	if(req.session.isLoggedIn){
 	User.find({ username: req.session.username }, function(err, users) {
@@ -215,7 +214,6 @@ exports.viewDetails = function(req, res) {
 		res.redirect('/');
 	}
 }
-
 exports.editDetails = function(req, res) {
 	var user = User.find({ username: req.session.username }, function(err, users) {
 		if(err) return console.error(err);
