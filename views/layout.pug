@@ -5,21 +5,12 @@ html
 		link(href='style.css', rel='stylesheet')
 	body
 		header
-			nav
-				ul
-					//- Change this section depending on the user status and type
-					li
-						a(href='/') Home
-					li
-						a(href='/details') Profile
-					li
-						a(href='/login') Log In
-					li
-						a(href='/logout') Log Out
-					li
-						a(href='/signup') Sign Up
-					li
-						a(href='/admin') Admin Only
+			div(id="navbar")
+				nav
+					ul
+						each item in config.routes
+							li
+								a(href=item[1] class="navbutton") #{item[0]}
 			block content
 		footer
 			p(id='lastVisit')

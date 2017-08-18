@@ -22,6 +22,15 @@ var userSchema = mongoose.Schema({ // Put the schema for our data in here
 
 var User = mongoose.model('User_Collection', userSchema);
 
+var config = {
+  "routes": [
+      ["Home", "/"],
+      ["Profile", "/profile"],
+      ["Login", "/login"],
+      ["Sign up", "/signup"],
+      ["Admin only", "/admin"]
+  ]
+};
 exports.index = function (req, res) {    
 	User.find(function(err, users){
 		 if (err) return console.error(err);
@@ -34,14 +43,17 @@ exports.index = function (req, res) {
 			secondQ += user.question2 ? 1 : 0;
 			thirdQ += user.question3 ? 1 : 0;
 		});
-     res.render('index', {      
-			data: [firstQ, secondQ, thirdQ, users.length]
+			res.render('index', {
+				data: [firstQ, secondQ, thirdQ, users.length],
+				config: config
 		});
 	});	
 };
 
 exports.login = function (req, res) {
-	res.render('login')
+	res.render('login', {
+		config: config
+	});
 }
 exports.tryLogin = function (req, res) {
 	var success = false;
@@ -50,23 +62,22 @@ exports.tryLogin = function (req, res) {
 		if(err) return console.error(err);
 		
 		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
-			console.log('res: ' + res);
-			if(res) {
-				// Create session
+				success = true;=
 				res.redirect('/');
 			}
-			else {
-				res.render('login');
+				res.redirect('/login');=
 			}
 		});
 	});
 }
 exports.logout = function (req, res){
 	req.session.destroy();
-  res.redirect('/');
+	res.redirect('/');
 }
 exports.signup = function(req, res) {
-	res.render('sign-up', { usernameExists: false });
+	res.render('sign-up', {
+		usernameExists: false, config: config
+	});
 }
 
 exports.admin = function(req, res) {
@@ -74,7 +85,8 @@ exports.admin = function(req, res) {
     if (err) return console.error(err);
     res.render('admin', {
       title: 'Users List',
-      people: users
+      people: user,
+      config: config
     });
   });
 }
@@ -128,14 +140,17 @@ exports.createUser = function(req, res) {
 		res.render('sign-up', { usernameExists: true })
 	}
 }
-
 exports.viewDetails = function(req, res) {
 	// Get user data from session
-	res.render('user-details')
+	res.render('user-details', {
+		config: config
+	})
 }
 exports.editDetails = function(req, res) {
 	// Get user data from session
-	res.render('edit-details')
+	res.render('edit-details', {
+		config: config
+	})
 }
 exports.submitChanges = function(req, res) {
 	// Create the changes in the database
