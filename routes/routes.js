@@ -25,7 +25,7 @@ var User = mongoose.model('User_Collection', userSchema);
 var config = {
   "routes": [
       ["Home", "/"],
-      ["Profile", "/profile"],
+      ["Profile", "/details"],
       ["Login", "/login"],
       ["Sign up", "/signup"],
       ["Admin only", "/admin"]
@@ -168,7 +168,7 @@ exports.viewDetails = function(req, res) {
 				age: users[0].age,
 				answer1Blurb: firstBlurb,
 				answer2Blurb: secondBlurb,
-				answer3Blurb: thirdBlurb
+				answer3Blurb: thridBlurb
 			}
 		});
 	});
