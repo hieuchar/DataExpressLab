@@ -33,11 +33,11 @@ var config = {
 };
 exports.index = function (req, res) {
 	User.find(function(err, users){
-		 if (err) return console.error(err);
+		if (err) return console.error(err);
 		 
-		 var firstQ = 0;
-		 var secondQ = 0;
-		 var thirdQ = 0;
+		var firstQ = 0;
+		var secondQ = 0;
+		var thirdQ = 0;
 		users.forEach(function(user){
 			firstQ += user.question1 ? 1 : 0;
 			secondQ += user.question2 ? 1 : 0;
@@ -59,12 +59,12 @@ exports.tryLogin = function (req, res) {
 	var success = false;
 	
 	var usersArray = User.find({ username: req.body.username }, function(err, users) {
-		if(err) return console.error(err);		
+		if(err) return console.error(err);
 		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
 				success = true;
 				req.session.username = req.body.username;
 			console.log(req.session);
-				res.redirect('/');			
+				res.redirect('/');
 		});
 	});
 }
@@ -139,43 +139,48 @@ exports.createUser = function(req, res) {
 	}
 }
 exports.viewDetails = function(req, res) {
-	var user = User.find({ username: req.session.username }, function(err, users) {
+	User.find({ username: req.session.username }, function(err, users) {
 		if(err) return console.error(err);
 		var firstBlurb, secondBlurb, thridBlurb;
 		
-		if(user.question1) {
-			
+		if(users[0].question1) {
+			firstBlurb = 'Would rather be illiterate';
 		}
 		else {
-			
+			firstBlurb = 'Would rather take everything literally';
 		}
-		if(user.question1) {
-			
-		}
-		else {
-			
-		}
-		if(user.question1) {
-			
+		if(users[0].question2) {
+			secondBlurb = 'Would rather only be able to laugh at blonde jokes'
 		}
 		else {
-			
+			secondBlurb = 'Would rather be unable to understand sarcasm'
+		}
+		if(users[0].question3) {
+			thridBlurb = "Would rather sleep in a room that's slightly too warm"
+		}
+		else {
+			thridBlurb = "Would rather sleep in a room that's slightly too cold"
 		}
 		
 		res.render('user-details', {
 			config: config,
 			user: {
-				age: user.age;
+				age: users[0].age,
+				answer1Blurb: firstBlurb,
+				answer2Blurb: secondBlurb,
+				answer3Blurb: thirdBlurb
 			}
 		});
-	}
-	
+	});
 }
 exports.editDetails = function(req, res) {
-	// Get user data from session
-	res.render('edit-details', {
-		config: config
-	})
+	var user = User.find({ username: req.session.username }, function(err, users) {
+		if(err) return console.error(err);
+		res.render('edit-details', {
+			config: config,
+			user: users[0]
+		});
+	});
 }
 exports.submitChanges = function(req, res) {
 	// Create the changes in the database
