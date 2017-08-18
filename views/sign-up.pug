@@ -1,6 +1,8 @@
 extends layout
 
 block content
+	if(usernameExists)
+		p Sorry, that username already exists.
 	form(id='form' method='post' onsubmit='return validate();' action='/signup')
 		label Username	
 		input(type='text' name='username')
