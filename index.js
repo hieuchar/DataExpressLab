@@ -17,7 +17,7 @@ var urlencodedParser = bodyParser.urlencoded({
 
 app.use(expressSession({
   saveUninitialized: true,
-	secret: 'LoggedIn',
+	secret: 'false',
   resave: true,
   expires: true
 }));
@@ -32,7 +32,7 @@ app.post('/edit-profile', urlencodedParser, route.submitChanges);
 app.get('/login', route.login);
 app.post('/login', urlencodedParser, route.tryLogin);
 app.get('/logout', route.logout);
-//app.get('/admin', route.admin);
+app.get('/admin', route.admin);
 //app.get('/delete/:username', route.deleteUser);
 //app.get('/new-admin/:username', route.makeUserAdmin);
 

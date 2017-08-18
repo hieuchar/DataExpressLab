@@ -59,14 +59,12 @@ exports.tryLogin = function (req, res) {
 	var success = false;
 	
 	var usersArray = User.find({ username: req.body.username }, function(err, users) {
-		if(err) return console.error(err);
-		
+		if(err) return console.error(err);		
 		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
-				success = true;=
-				res.redirect('/');
-			}
-				res.redirect('/login');=
-			}
+				success = true;
+				req.session.username = req.body.username;
+			console.log(req.session);
+				res.redirect('/');			
 		});
 	});
 }
@@ -85,7 +83,7 @@ exports.admin = function(req, res) {
     if (err) return console.error(err);
     res.render('admin', {
       title: 'Users List',
-      people: user,
+      people: users,
       config: config
     });
   });
