@@ -78,6 +78,21 @@ exports.admin = function(req, res) {
     });
   });
 }
+exports.deleteUser = function(req, res) {
+	// if signed-in user is admin
+		// Delete user with the specified username
+		res.redirect('/admin');
+	// else
+		res.redirect('/');
+}
+exports.makeUserAdmin = function(req,res) {
+	// if signed-in user is admin
+		// Fetch specified user
+		// Change isAdmin to true
+		res.redirect('/admin');
+	// else
+		res.redirect('/');
+}
 
 exports.createUser = function(req, res) {
 	var newUsername = true;
