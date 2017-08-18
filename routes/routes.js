@@ -84,7 +84,7 @@ exports.admin = function(req, res) {
     if (err) return console.error(err);
     res.render('admin', {
       title: 'Users List',
-      people: user
+      people: users
     });
   });
 }
