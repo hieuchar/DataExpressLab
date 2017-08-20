@@ -89,7 +89,6 @@ exports.login = function (req, res) {
 	});
 }
 exports.tryLogin = function (req, res) {
-
 	var usersArray = User.find({ username: req.body.username }, function(err, users) {
 		if(err) return console.error(err);
 		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
@@ -101,11 +100,13 @@ exports.tryLogin = function (req, res) {
 		});
 	});
 }
+
 exports.logout = function (req, res){
 	req.session.destroy();
 	console.log(req.session);
 	res.redirect('/');
 }
+
 exports.signup = function(req, res) {
 	res.render('sign-up', {
 		usernameExists: false, config: config
@@ -224,6 +225,17 @@ exports.editDetails = function(req, res) {
 	});
 }
 exports.submitChanges = function(req, res) {
-	// Create the changes in the database
-	// This should basically be the same as create user, except you're modifying and existing object
+	User.find({ username: req.session.username }, function(err, users) {
+		var user = users[0];
+		user.age = req.body.age;
+		user.question1 = req.body.question1 == 1;
+		user.question2 = req.body.question2 == 1;
+		user.question3 = req.body.question3== 1;
+		
+		user.save(function(err, user) {
+			if (err) return console.error(err);
+			else console.log('Updated ' + req.session.username);
+		});
+		res.redirect('/');
+	});
 }
