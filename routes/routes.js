@@ -24,10 +24,10 @@ var User = mongoose.model('User_Collection', userSchema);
 
 var config = {
 	"routes": [
-		["Home", "/"],
-		["Profile", "/profile"],
-		["Login", "/login"],		["Sign up", "/signup"],
-		["Admin only", "/admin"]
+		["Home", "/"],		
+		["Sign up", "/signup"],
+		["Login", "/login"]
+		
 	]
 };
 
@@ -79,9 +79,11 @@ exports.index = function (req, res) {
   				]
 				}
 		});
-
-	});
+	}
+})
 }
+						
+						
 
 exports.login = function (req, res) {
 	res.render('login', {
@@ -200,7 +202,13 @@ exports.viewDetails = function(req, res) {
 		}
 		
 		res.render('user-details', {
-			config: config,
+			config: {
+  				"routes": [
+							["Home", "/"],
+							["Profile", "/details"],
+						  ["Logout", "/logout"]
+  				]
+				},
 			user: {
 				age: users[0].age,
 				answer1Blurb: firstBlurb,
