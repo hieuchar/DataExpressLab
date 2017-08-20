@@ -24,7 +24,7 @@ var User = mongoose.model('User_Collection', userSchema);
 
 var config = {
 	"routes": [
-		["Home", "/"],		
+		["Home", "/"],
 		["Sign up", "/signup"],
 		["Login", "/login"]
 		
@@ -49,7 +49,7 @@ exports.index = function (req, res) {
 				config: {
 					"routes": [
 						["Home", "/"],
-						["Profile", "/profile"],
+						["Profile", "/details"],
 						["Admin ", "/admin"],
 						["Logout", "/logout"]
 					]
@@ -60,11 +60,11 @@ exports.index = function (req, res) {
 			res.render('index', {
 				data: [firstQ, secondQ, thirdQ, users.length],
 				config: {
-  				"routes": [
-							["Home", "/"],
-							["Profile", "/details"],
-						  ["Logout", "/logout"]
-  				]
+					"routes": [
+						["Home", "/"],
+						["Profile", "/details"],
+						["Logout", "/logout"]
+					]
 				}
 			});
 		}
@@ -72,25 +72,33 @@ exports.index = function (req, res) {
 			res.render('index', {
 				data: [firstQ, secondQ, thirdQ, users.length],
 				config: {
-  				"routes": [
-							["Home", "/"],
-							["Sign up", "/signup"],
-						  ["Login", "/login"]
-  				]
+					"routes": [
+						["Home", "/"],
+						["Sign up", "/signup"],
+						["Login", "/login"]
+					]
 				}
-		});
-	}
-})
+			});
+		}
+	})
 }
 						
 						
 
 exports.login = function (req, res) {
+	if(req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	res.render('login', {
 		config: config
 	});
 }
 exports.tryLogin = function (req, res) {
+	if(req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	var usersArray = User.find({ username: req.body.username }, function(err, users) {
 		if(err) return console.error(err);
 		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
@@ -110,11 +118,19 @@ exports.logout = function (req, res){
 }
 
 exports.signup = function(req, res) {
+	if(req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	res.render('sign-up', {
 		usernameExists: false, config: config
 	});
 }
 exports.createUser = function(req, res) {
+	if(req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	var newUsername = true;
 	User.find(function(err, users) {
 		for(var x = 0; x < users.length && newUsername; x++) {
@@ -156,7 +172,13 @@ exports.admin = function(req, res) {
 			res.render('admin', {
 				title: 'Users List',
 				people: users,
-				config: config
+				config: {
+					"routes": [
+						["Home", "/"],
+						["Profile", "/details"],
+						["Admin ", "/admin"],
+						["Logout", "/logout"]
+				]
 			});
 		});
 	}
@@ -179,71 +201,122 @@ exports.makeUserAdmin = function(req,res) {
 
 exports.viewDetails = function(req, res) {
 	if(req.session.isLoggedIn){
-	User.find({ username: req.session.username }, function(err, users) {
-		if(err) return console.error(err);
-		var firstBlurb, secondBlurb, thridBlurb;
-		
-		if(users[0].question1) {
-			firstBlurb = 'Would rather be illiterate';
-		}
-		else {
-			firstBlurb = 'Would rather take everything literally';
-		}
-		if(users[0].question2) {
-			secondBlurb = 'Would rather only be able to laugh at blonde jokes'
-		}
-		else {
-			secondBlurb = 'Would rather be unable to understand sarcasm'
-		}
-		if(users[0].question3) {
-			thirdBlurb = "Would rather sleep in a room that's slightly too warm"
-		}
-		else {
-			thirdBlurb = "Would rather sleep in a room that's slightly too cold"
-		}
-		
-		res.render('user-details', {
-			config: {
-  				"routes": [
-							["Home", "/"],
-							["Profile", "/details"],
-						  ["Logout", "/logout"]
-  				]
-				},
-			user: {
-				age: users[0].age,
-				answer1Blurb: firstBlurb,
-				answer2Blurb: secondBlurb,
-				answer3Blurb: thirdBlurb
+		User.find({ username: req.session.username }, function(err, users) {
+			if(err) return console.error(err);
+			var firstBlurb, secondBlurb, thridBlurb;
+			
+			if(users[0].question1) {
+				firstBlurb = 'Would rather be illiterate';
+			}
+			else {
+				firstBlurb = 'Would rather take everything literally';
+			}
+			if(users[0].question2) {
+				secondBlurb = 'Would rather only be able to laugh at blonde jokes'
+			}
+			else {
+				secondBlurb = 'Would rather be unable to understand sarcasm'
+			}
+			if(users[0].question3) {
+				thirdBlurb = "Would rather sleep in a room that's slightly too warm"
+			}
+			else {
+				thirdBlurb = "Would rather sleep in a room that's slightly too cold"
+			}
+			
+			if(req.session.isAdmin) {
+				res.render('user-details', {
+					config: {
+  						"routes": [
+									["Home", "/"],
+									["Profile", "/details"],
+									["Admin ", "/admin"],
+									["Logout", "/logout"]
+  						]
+						},
+					user: {
+						age: users[0].age,
+						answer1Blurb: firstBlurb,
+						answer2Blurb: secondBlurb,
+						answer3Blurb: thirdBlurb
+					}
+				});
+			}
+			else {
+				res.render('user-details', {
+					config: {
+  						"routes": [
+									["Home", "/"],
+									["Profile", "/details"],
+									["Logout", "/logout"]
+  						]
+						},
+					user: {
+						age: users[0].age,
+						answer1Blurb: firstBlurb,
+						answer2Blurb: secondBlurb,
+						answer3Blurb: thirdBlurb
+					}
+				});
 			}
 		});
-	});
 	}
 	else{
 		res.redirect('/');
 	}
 }
 exports.editDetails = function(req, res) {
-	var user = User.find({ username: req.session.username }, function(err, users) {
-		if(err) return console.error(err);
-		res.render('edit-details', {
-			config: config,
-			user: users[0]
+	if(req.session.isLoggedIn) {
+		var user = User.find({ username: req.session.username }, function(err, users) {
+			if(err) return console.error(err);
+			if(req.session.isAdmin) {
+				res.render('edit-details', {
+					config: {
+						"routes": [
+							["Home", "/"],
+							["Profile", "/details"],
+							["Admin ", "/admin"],
+							["Logout", "/logout"]
+						]
+					},
+					user: users[0]
+				});
+			}
+			else {
+				res.render('edit-details', {
+					config: {
+						"routes": [
+							["Home", "/"],
+							["Profile", "/details"],
+							["Logout", "/logout"]
+						]
+					},
+					user: users[0]
+				});
+			}
 		});
-	});
+	}
+	else {
+		res.redirect('/');
+	}
 }
 exports.submitChanges = function(req, res) {
-	User.find({ username: req.session.username }, function(err, users) {
-		var user = users[0];
-		user.age = req.body.age;
-		user.question1 = req.body.question1 == 1;
-		user.question2 = req.body.question2 == 1;
-		user.question3 = req.body.question3== 1;
-		
-		user.save(function(err, user) {
-			if (err) return console.error(err);
-			else console.log('Updated ' + req.session.username);
+	if(req.session.isLoggedIn) {
+		User.find({ username: req.session.username }, function(err, users) {
+			var user = users[0];
+			user.age = req.body.age;
+			user.question1 = req.body.question1 == 1;
+			user.question2 = req.body.question2 == 1;
+			user.question3 = req.body.question3== 1;
+			
+			user.save(function(err, user) {
+				if (err) return console.error(err);
+				else console.log('Updated ' + req.session.username);
+			});
+			res.redirect('/');
 		});
+	}
+	else {
 		res.redirect('/');
-	});
+	}
 }
