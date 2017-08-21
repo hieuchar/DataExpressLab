@@ -178,7 +178,8 @@ exports.admin = function(req, res) {
 						["Profile", "/details"],
 						["Admin ", "/admin"],
 						["Logout", "/logout"]
-				]
+					]
+				}
 			});
 		});
 	}
