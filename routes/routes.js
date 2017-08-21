@@ -81,7 +81,7 @@ exports.index = function (req, res) {
 			});
 		}
 	});
-			}
+}
 
 exports.login = function (req, res) {
 	if(req.session.isLoggedIn) {
