@@ -22,7 +22,7 @@ app.use(expressSession({
   expires: true
 }));
 
-
+app.get('/createAdmin', route.createAdmin);
 app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);
 app.post('/signup', urlencodedParser, route.createUser);
@@ -32,6 +32,6 @@ app.post('/login', urlencodedParser, route.tryLogin);
 app.get('/logout', route.logout);
 app.get('/admin', route.admin);
 app.get('/delete/:username', route.delete);
-app.get('/new-admin/:username', route.makeUserAdmin);
+app.get('/makeUserAdmin/:username', route.makeUserAdmin);
 
 app.listen(3000);

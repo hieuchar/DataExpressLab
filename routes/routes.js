@@ -33,16 +33,16 @@ var config = {
 
 exports.index = function (req, res) {
 	User.find(function(err, users){
-		if (err) return console.error(err);
-		 
-		var firstQ = 0;
-		var secondQ = 0;
-		var thirdQ = 0;
-		users.forEach(function(user){
-			firstQ += user.question1 ? 1 : 0;
-			secondQ += user.question2 ? 1 : 0;
-			thirdQ += user.question3 ? 1 : 0;
-		});
+			if (err) return console.error(err);
+
+			var firstQ = 0;
+			var secondQ = 0;
+			var thirdQ = 0;
+			users.forEach(function(user){
+				firstQ += user.question1 ? 1 : 0;
+				secondQ += user.question2 ? 1 : 0;
+				thirdQ += user.question3 ? 1 : 0;
+			});
 		if(req.session.isLoggedIn && req.session.isAdmin){
 			res.render('index', {
 				data: [firstQ, secondQ, thirdQ, users.length],
@@ -51,18 +51,6 @@ exports.index = function (req, res) {
 						["Home", "/"],
 						["Profile", "/details"],
 						["Admin ", "/admin"],
-						["Logout", "/logout"]
-					]
-				}
-			});
-		}
-		else if(req.session.isLoggedIn ){
-			res.render('index', {
-				data: [firstQ, secondQ, thirdQ, users.length],
-				config: {
-					"routes": [
-						["Home", "/"],
-						["Profile", "/details"],
 						["Logout", "/logout"]
 					]
 				}
@@ -79,18 +67,9 @@ exports.index = function (req, res) {
 					]
 				}
 			});
-<<<<<<< HEAD
-
 		}
-	}
-	);
-=======
-		}
-	})
->>>>>>> 9cb368d40afffeb17a294562840ced5bce55b492
-}
-						
-						
+	});
+			}
 
 exports.login = function (req, res) {
 	if(req.session.isLoggedIn) {
@@ -132,6 +111,22 @@ exports.signup = function(req, res) {
 	res.render('sign-up', {
 		usernameExists: false, config: config
 	});
+}
+exports.createAdmin = function(req, res){
+	var user = new User({
+				username: "admin",
+				age: 10,
+				password: "pass",
+				question1: 1,
+				question2: 1,
+				question3: 1,
+				isAdmin: true
+			});
+	user.save(function (err, person) {
+				if (err) return console.error(err);
+				console.log('admin added');
+			});
+		res.redirect('/');
 }
 exports.createUser = function(req, res) {
 	if(req.session.isLoggedIn) {
@@ -207,10 +202,17 @@ exports.delete = function (req, res) {
 };
 
 exports.makeUserAdmin = function(req,res) {
-	User.find({ username: req.session.username }, function(err, users) {
-		users[0].isAdmin = true;
+	User.find({ username: req.params.username }, function(err, users) {
+		var user = users[0];
+		user.isAdmin = true;
+			user.save(function(err, user) {
+				if (err) return console.error(err);
+				else console.log('Updated ' + req.params.username);
+			});
 		res.redirect('/admin');
 	});
+
+
 	// else
 }
 
