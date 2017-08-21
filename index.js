@@ -27,6 +27,8 @@ app.get('/', route.index); // Single Interceptors go in here
 app.get('/signup', route.signup);
 app.post('/signup', urlencodedParser, route.createUser);
 app.get('/details', route.viewDetails);
+app.get('/edit-details', route.editDetails);
+app.post('/edit-details', urlencodedParser, route.submitChanges);
 app.get('/login', route.login);
 app.post('/login', urlencodedParser, route.tryLogin);
 app.get('/logout', route.logout);
