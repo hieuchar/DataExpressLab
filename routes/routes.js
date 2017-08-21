@@ -86,11 +86,19 @@ exports.index = function (req, res) {
 						
 
 exports.login = function (req, res) {
+	if(req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	res.render('login', {
 		config: config
 	});
 }
 exports.tryLogin = function (req, res) {
+	if(req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	var usersArray = User.find({ username: req.body.username }, function(err, users) {
 		if(err) return console.error(err);
 		bcrypt.compare(req.body.password, users[0].password, function(err, result) {
@@ -110,6 +118,10 @@ exports.logout = function (req, res){
 }
 
 exports.signup = function(req, res) {
+	if(req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	res.render('sign-up', {
 		usernameExists: false, config: config
 	});
@@ -150,15 +162,18 @@ exports.createUser = function(req, res) {
 }
 
 exports.admin = function(req, res) {
-	if(req.session.isAdmin){
+	if(req.session.isLoggedIn && req.session.isAdmin){
 		User.find(function (err, users) {
-			if (err) return console.error(err);
+			console.log(users);
 			res.render('admin', {
 				title: 'Users List',
 				people: users,
 				config: config
 			});
 		});
+	}
+	else {
+		res.redirect('/');
 	}
 }
 exports.deleteUser = function(req, res) {
@@ -224,6 +239,10 @@ exports.viewDetails = function(req, res) {
 	}
 }
 exports.editDetails = function(req, res) {
+	if(!req.session.isLoggedIn) {
+		res.redirect('/');
+	}
+	
 	var user = User.find({ username: req.session.username }, function(err, users) {
 		if(err) return console.error(err);
 		res.render('edit-details', {
