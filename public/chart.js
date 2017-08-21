@@ -15,11 +15,11 @@ function drawChart(chart, amount){
 	var remainder = total - amount;
 	var height = Math.floor(c.height * .90);
 	
-	//draw the first bar 
-	chart.beginPath();  
+	//draw the first bar
+	chart.beginPath();
 	//choose the color
 	chart.fillStyle = "#3370d4";
-	//draw in the rectangle  
+	//draw in the rectangle
 	console.log(Math.floor(height - (amount/total) * height));
 	chart.rect(Math.floor(c.width/8), Math.floor(height - (amount/total) * height), Math.floor(c.width/4), c.height)
 	chart.fill();
@@ -38,9 +38,9 @@ function drawChart(chart, amount){
 								 Math.floor(height - ((total-amount)/total) * (height)))
 	chart.closePath();
 	chart.fillStyle ="#000000";
-	chart.font = "15px Times New Roman";		
+	chart.font = "15px Times New Roman";
 }
-chart1.fillText("Illiterate(Blue) vs take everything literally", 0, 50);
+chart1.fillText("Be illiterate(Blue) vs take everything literally", 0, 50);
 chart2.fillText("Blonde jokes only(Blue) vs no sarcasm", 0, 50);
-chart3.fillText("Too warm(Blue) vs too cold", 0, 50);
+chart3.fillText("Sleep too warm(Blue) vs Sleep too cold", 0, 50);
 
