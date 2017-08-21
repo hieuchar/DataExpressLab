@@ -149,7 +149,7 @@ exports.createUser = function(req, res) {
 				question1: req.body.question1 == 1,
 				question2: req.body.question2 == 1,
 				question3: req.body.question3 == 1,
-				isAdmin: req.body.userType == 1
+				isAdmin: false;
 			});
 			
 			user.save(function (err, person) {

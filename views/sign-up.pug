@@ -4,17 +4,27 @@ block content
 	if(usernameExists)
 		p Sorry, that username already exists.
 	form(id='form' method='post' onsubmit='return validate();' action='/signup')
-		label Username	
-		input(type='text' name='username')
-		br
-		label Password	
-		input(type='password' name='password')
-		br
-		label Confirm Password	
-		input(type='password' name='confPass')
-		br
-		label Age
-		input(type='number' name='age')
+		table
+			tr
+				td
+					label Username
+				td
+					input(type='text' name='username')
+			tr
+				td
+					label Password
+				td
+					input(type='password' name='password')
+			tr
+				td
+					label Confirm Password
+				td
+					input(type='password' name='confPass')
+			tr
+				td
+					label Age
+				td
+					input(type='number' name='age')
 		br
 		fieldset(id='question1')
 			label Would you rather: 
@@ -34,12 +44,6 @@ block content
 			label Sleep in a room that's slightly too warm
 			input(type='radio' name='question3' value='0' fieldset='question3') 
 			label Sleep in a room that's slightly too cold
-		fieldset(id='userType')
-			label What type of user are you?
-			input(type='radio' name='userType' value='0' fieldset='userType' checked)
-			label Normal
-			input(type='radio' name='userType' value='1' fieldset='userType')
-			label Admin
 		input(type='submit' value='Submit')
 	div(id='response')
 	script(type="text/javascript" src="./validation.js")
