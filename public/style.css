@@ -8,6 +8,20 @@ body {
   padding: 20px;
   background-color: #FDFF84;
 }
+table.gridtable tr {
+  color: #337;
+  border-width: 1px;
+  border-color: #559;
+  border-collapse: collapse;
+}
+
+table.gridtable td {
+  border-width: 1px;
+  padding: 8px;
+  border-style: solid;
+  border-color: #559;
+  background-color: #fff;
+}
 #navbar {
     background: #C22425;
     height: 30px;

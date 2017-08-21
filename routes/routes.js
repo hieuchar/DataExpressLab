@@ -78,9 +78,11 @@ exports.index = function (req, res) {
 						  ["Login", "/login"]
   				]
 				}
-		});
+			});
 
-	});
+		}
+	}
+	);
 }
 
 exports.login = function (req, res) {
@@ -158,20 +160,24 @@ exports.admin = function(req, res) {
 		});
 	}
 }
-exports.deleteUser = function(req, res) {
-	// if signed-in user is admin
-		// Delete user with the specified username
+
+
+exports.delete = function (req, res) {
+		User.findByIdAndRemove(req.params.username, function (err, user) {
+			if (err) return console.error(err);
+			
 		res.redirect('/admin');
-	// else
-		res.redirect('/');
-}
+		});
+		console.log("deleted", req.params);
+
+};
+
 exports.makeUserAdmin = function(req,res) {
-	// if signed-in user is admin
-		// Fetch specified user
-		// Change isAdmin to true
+	User.find({ username: req.session.username }, function(err, users) {
+		users[0].isAdmin = true;
 		res.redirect('/admin');
+	});
 	// else
-		res.redirect('/');
 }
 
 exports.viewDetails = function(req, res) {

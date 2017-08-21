@@ -1,13 +1,25 @@
 extends layout
 
 block content
-	each item in people
-		tr
-			td #{item.username}
-			td #{item.age}
-			td #{item.question1}
-			td #{item.question2}
-			td #{item.question3}
-			br
-	#menu
-	a(href='/') Go back
+  table(class='gridtable')
+    tr
+      th Name
+      th Age
+      th Admin
+      th Question 1
+      th Question 2
+      th Question 3
+      th Id
+    each item in people
+      tr
+        td #{item.username}
+        td #{item.age}
+        td #{item.isAdmin}
+        td #{item.question1}
+        td #{item.question2}
+        td #{item.question3}
+        td #{item.id}
+        td
+          a(href='/makeUserAdmin/' + item.username) Make Admins
+        td
+          a(href='/delete/' + item.id) Delete

@@ -33,7 +33,7 @@ app.get('/login', route.login);
 app.post('/login', urlencodedParser, route.tryLogin);
 app.get('/logout', route.logout);
 app.get('/admin', route.admin);
-app.get('/delete/:username', route.deleteUser);
+app.get('/delete/:username', route.delete);
 app.get('/new-admin/:username', route.makeUserAdmin);
 
 app.listen(3000);
