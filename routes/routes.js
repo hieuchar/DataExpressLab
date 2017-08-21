@@ -56,6 +56,18 @@ exports.index = function (req, res) {
 				}
 			});
 		}
+		else if (req.session.isLoggedIn) {
+			res.render('index', {
+				data: [firstQ, secondQ, thirdQ, users.length],
+				config: {
+					"routes": [
+						["Home", "/"],
+						["Profile", "/details"],
+						["Logout", "/logout"]
+					]
+				}
+			});
+		}
 		else{
 			res.render('index', {
 				data: [firstQ, secondQ, thirdQ, users.length],
@@ -69,7 +81,7 @@ exports.index = function (req, res) {
 			});
 		}
 	});
-			}
+}
 
 exports.login = function (req, res) {
 	if(req.session.isLoggedIn) {
